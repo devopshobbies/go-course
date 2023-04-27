@@ -52,7 +52,7 @@ func (e *element) print() {
 }
 
 func main() {
-	pointer := &element{data: '|'}
+	curser := &element{data: '|'}
 
 	var count int
 	fmt.Scan(&count)
@@ -67,32 +67,32 @@ func main() {
 		switch command(fields[0]) {
 		case INSERT:
 			element := &element{data: []byte(fields[1])[0]}
-			if pointer.prev != nil {
-				element.prev = pointer.prev
-				pointer.prev.next = element
+			if curser.prev != nil {
+				element.prev = curser.prev
+				curser.prev.next = element
 			}
-			pointer.prev = element
-			element.next = pointer
+			curser.prev = element
+			element.next = curser
 
 		case LEFT:
-			if pointer.prev != nil {
-				pointer.prev.data, pointer.data = pointer.data, pointer.prev.data
-				pointer = pointer.prev
+			if curser.prev != nil {
+				curser.prev.data, curser.data = curser.data, curser.prev.data
+				curser = curser.prev
 			}
 
 		case RIGHT:
-			if pointer.next != nil {
-				pointer.next.data, pointer.data = pointer.data, pointer.next.data
-				pointer = pointer.next
+			if curser.next != nil {
+				curser.next.data, curser.data = curser.data, curser.next.data
+				curser = curser.next
 			}
 
 		case BACKSPACE:
-			if pointer.prev != nil {
-				if pointer.prev.prev != nil {
-					pointer.prev.prev.next = pointer
-					pointer.prev = pointer.prev.prev
+			if curser.prev != nil {
+				if curser.prev.prev != nil {
+					curser.prev.prev.next = curser
+					curser.prev = curser.prev.prev
 				} else {
-					pointer.prev = nil
+					curser.prev = nil
 				}
 			}
 		default:
@@ -100,5 +100,5 @@ func main() {
 		}
 	}
 
-	pointer.print()
+	curser.print()
 }
