@@ -3,7 +3,7 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 )
@@ -21,7 +21,7 @@ func (handler *server) calculateBMI(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "POST":
 		defer r.Body.Close()
-		rawBody, err := ioutil.ReadAll(r.Body)
+		rawBody, err := io.ReadAll(r.Body)
 		if err != nil {
 			panic(err) // TODO
 		}
