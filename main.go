@@ -1,8 +1,10 @@
 package main
 
-import "github.com/mohammadne/go-course/server"
+import (
+	"github.com/devopshobbies/go-course/server"
+)
 
 func main() {
 	server := server.New()
-	server.Serve()
+	server.Serve(8080)
 }

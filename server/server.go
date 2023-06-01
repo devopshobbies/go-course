@@ -19,7 +19,7 @@ func New() *server {
 	}
 }
 
-func (s *server) Serve() {
+func (s *server) Serve(port int) {
 	http.Handle("/", http.FileServer(http.Dir("./static")))
 
 	http.HandleFunc("/hello", s.incrementCounter)
@@ -28,7 +28,9 @@ func (s *server) Serve() {
 
 	http.Handle("/sample", &sample{})
 
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	addr := fmt.Sprintf(":%d", port)
+	fmt.Println("listening on", addr)
+	log.Fatal(http.ListenAndServe(addr, nil))
 }
 
 type sample struct {
