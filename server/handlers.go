@@ -8,6 +8,10 @@ import (
 	"strconv"
 )
 
+func (handler *server) hello(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello from Devopshobbies!")
+}
+
 func (handler *server) calculateBMI(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/bmi" {
 		http.Error(w, "404 not found.", http.StatusNotFound)
@@ -53,7 +57,8 @@ func (handler *server) calculateBMI(w http.ResponseWriter, r *http.Request) {
 
 func (handler *server) incrementCounter(w http.ResponseWriter, r *http.Request) {
 	handler.mutex.Lock()
+	defer handler.mutex.Unlock()
+
 	handler.counter++
 	fmt.Fprintf(w, strconv.Itoa(handler.counter))
-	handler.mutex.Unlock()
 }
